@@ -38,6 +38,9 @@ ok( $ret, $msg );
     # Automatically logged in as root without Login page
     $m->get_ok($url);
     ok $m->logged_in_as("root"), "Logged in as root";
+    $m->follow_link_ok( { text => 'Users', id => 'admin-users' } );
+    $m->follow_link_ok( { text => 'root' } );
+    is( $m->uri->path, '/Admin/Users/Modify.html', 'User link matches empty WebPath' );
 
     # Drop credentials
     $m->auth('');
@@ -52,6 +55,10 @@ ok( $ret, $msg );
     $m->content_like( qr/Login/, "Login form" );
     $m->get_ok( $url . '/rt/?user=root;pass=password' );
     ok $m->logged_in_as("root"), "Logged in as root";
+
+    $m->follow_link_ok( { text => 'Users', id => 'admin-users' } );
+    $m->follow_link_ok( { text => 'root' } );
+    is( $m->uri->path, '/rt/Admin/Users/Modify.html', 'User link matches WebPath /rt' );
 
     my $text = <<EOF;
 From: root\@localhost
