@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package RT::Extension::DynamicWebPath;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my $post_load_check_ran;
 
